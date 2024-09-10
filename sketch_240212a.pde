@@ -4,7 +4,9 @@ PImage img;
 
 Boid[] boidList;
 
-boolean isRec = true;
+
+int lenBoids = 200;
+int walkLen = 600;
 
 
 int pixPos(int x, int y) {
@@ -86,42 +88,37 @@ class Boid {
   
 }
 
+void settings() {
+  // Load the image first to get its dimensions
+  img = loadImage("example_image.jpg"); // Load the image
+
+  // Set the window size to match the image dimensions
+  size(img.width, img.height);
+}
+
 void setup() {
   noLoop();
-  size(816, 1056);
-  
-  
-  img = loadImage("C:/Users/mcdun/Downloads/IMG_0540.jpg"); // Load the image
-  
-  //print(img.width, img.height);
-  
-  // Use the image
-  image(img, 0, 0, width, height);
+
+  image(img, 0, 0);
 
   noFill();
   stroke(255, 0, 0);
   
-  boidList = new Boid[1000];
-  for(int i = 0; i < 1000; i++) {
+  boidList = new Boid[lenBoids];
+  for(int i = 0; i < lenBoids; i++) {
     boidList[i] = new Boid();
   }
   loadPixels();
   
   beginRecord(SVG, "output.svg");
-}
-
-void draw() {
   
-  for(int i = 0; i < 500; i++) {
+  for(int i = 0; i < lenBoids; i++) {
     beginShape();
-    for(int t = 0; t < 600; t++) {
+    for(int t = 0; t < walkLen; t++) {
       boidList[i].update();
     }
     endShape();
   }
   
   endRecord();
-  
-
-  
 }
